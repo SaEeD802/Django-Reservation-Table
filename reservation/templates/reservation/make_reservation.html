@@ -1,0 +1,47 @@
+{% extends 'reservation/base.html' %}
+
+{% block title %}رزرو میز در {{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="p-8">
+            <h1 class="text-3xl font-bold mb-6">رزرو میز در {{ restaurant.name }}</h1>
+            
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div>
+                    <label for="date" class="block text-gray-700 font-medium mb-2">تاریخ</label>
+                    <input type="date" name="date" id="date" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                
+                <div>
+                    <label for="time" class="block text-gray-700 font-medium mb-2">ساعت</label>
+                    <input type="time" name="time" id="time" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <p class="text-sm text-gray-500 mt-1">ساعت کاری: {{ restaurant.opening_time }} تا {{ restaurant.closing_time }}</p>
+                </div>
+                
+                <div>
+                    <label for="guests" class="block text-gray-700 font-medium mb-2">تعداد مهمان‌ها</label>
+                    <input type="number" name="guests" id="guests" min="1" max="{{ restaurant.capacity }}" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <p class="text-sm text-gray-500 mt-1">حداکثر ظرفیت: {{ restaurant.capacity }} نفر</p>
+                </div>
+                
+                <div class="flex items-center justify-between pt-4">
+                    <a href="{% url 'reservation:restaurant_detail' restaurant.id %}" 
+                        class="text-gray-600 hover:text-gray-800">
+                        بازگشت به صفحه رستوران
+                    </a>
+                    <button type="submit"
+                        class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                        ثبت رزرو
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

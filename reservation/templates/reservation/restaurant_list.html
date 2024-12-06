@@ -1,0 +1,51 @@
+{% extends 'reservation/base.html' %}
+
+{% block title %}لیست رستوران‌ها{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8 text-center">رستوران‌های ما</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for restaurant in restaurants %}
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" class="w-full h-48 object-cover">
+        {% endif %}
+        <div class="p-6">
+            <h2 class="text-xl font-semibold mb-2">{{ restaurant.name }}</h2>
+            <p class="text-gray-600 mb-4">{{ restaurant.description|truncatewords:20 }}</p>
+            <div class="space-y-2">
+                <div class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {{ restaurant.address|truncatewords:5 }}
+                </div>
+                <div class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    {{ restaurant.phone }}
+                </div>
+                <div class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ restaurant.opening_time }} تا {{ restaurant.closing_time }}
+                </div>
+            </div>
+            <div class="mt-6">
+                <a href="{% url 'reservation:restaurant_detail' restaurant.pk %}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                    مشاهده و رزرو
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-3 text-center text-gray-500 py-12">
+        <p class="text-xl">در حال حاضر رستورانی ثبت نشده است.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

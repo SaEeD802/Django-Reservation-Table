@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}رزرو میز رستوران{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="{% url 'reservation:home' %}" class="text-2xl font-bold text-indigo-600">رزرو میز</a>
+            <div class="space-x-4 space-x-reverse">
+                <a href="{% url 'reservation:restaurant_list' %}" class="text-gray-600 hover:text-indigo-600">رستوران‌ها</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'reservation:my_reservations' %}" class="text-gray-600 hover:text-indigo-600">رزروهای من</a>
+                    <a href="{% url 'accounts:logout' %}" class="text-gray-600 hover:text-indigo-600">خروج</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="text-gray-600 hover:text-indigo-600">ورود</a>
+                    <a href="{% url 'accounts:register' %}" class="text-gray-600 hover:text-indigo-600">ثبت‌نام</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container mx-auto px-4 mt-4">
+        {% for message in messages %}
+        <div class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} rounded-lg">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; ۱۴۰۲ رزرو میز رستوران. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+</body>
+</html>

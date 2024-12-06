@@ -1,0 +1,69 @@
+{% extends 'reservation/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-indigo-600 text-white py-16 rounded-lg mb-12">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">رزرو آنلاین میز رستوران</h1>
+        <p class="text-xl mb-8">بهترین رستوران‌ها را انتخاب کنید و به راحتی میز رزرو کنید</p>
+        <a href="{% url 'reservation:restaurant_list' %}" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition duration-300">
+            مشاهده رستوران‌ها
+        </a>
+    </div>
+</div>
+
+<!-- Featured Restaurants -->
+<h2 class="text-3xl font-bold mb-8 text-center">رستوران‌های برتر</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for restaurant in restaurants %}
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" class="w-full h-48 object-cover">
+        {% endif %}
+        <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">{{ restaurant.name }}</h3>
+            <p class="text-gray-600 mb-4">{{ restaurant.description|truncatewords:20 }}</p>
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">ظرفیت: {{ restaurant.capacity }} نفر</span>
+                <a href="{% url 'reservation:restaurant_detail' restaurant.pk %}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-300">
+                    مشاهده و رزرو
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-gray-500 col-span-3">در حال حاضر رستورانی ثبت نشده است.</p>
+    {% endfor %}
+</div>
+
+<!-- Features Section -->
+<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="text-center">
+        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">رزرو سریع</h3>
+        <p class="text-gray-600">در کمترین زمان ممکن میز مورد نظر خود را رزرو کنید</p>
+    </div>
+    <div class="text-center">
+        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">پرداخت آنلاین</h3>
+        <p class="text-gray-600">پرداخت امن و آسان از طریق درگاه‌های معتبر</p>
+    </div>
+    <div class="text-center">
+        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">تضمین رزرو</h3>
+        <p class="text-gray-600">اطمینان از رزرو قطعی و بدون دردسر</p>
+    </div>
+</div>
+{% endblock %}
